@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { CreateModal } from "../subComponents/createModal";
 import { ProfilePhotoUpdate } from "./ProfilePhotoUpdate";
 import { useUser } from "../../UserContext";
-import { LogOutButton } from '../Mobile/LogOutIcon'
+import { LogOutButton } from './LogOutIcon'
 import { ProfileEditForm } from "./ProfileEditForm";
 
 

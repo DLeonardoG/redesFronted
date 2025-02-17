@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import {AsideMain } from './subComponents/asideMain';
-import '../styles.css';
 import { useUser } from '../UserContext';
+import { ProfileBanner } from './profile/ProfileBanner'
+import { ProfilePosts } from './profile/ProfilePosts'
+
 
 
 export const Profile = () => {
@@ -13,11 +15,8 @@ export const Profile = () => {
     <div className=''>
       <div className='h-screen bg-gray-100'>
         <AsideMain usuario={usuario} />
-        Profile
-        {/* <div className='flex flex-col w-full overflow-y-auto'>
-            <ProfileBanner usuario={usuario} />
-            <ProfilePosts usuario={usuario} />
-        </div> */}
+        <ProfileBanner usuario={usuario} />
+        <ProfilePosts usuario={usuario} />
       </div>
     </div>
   )

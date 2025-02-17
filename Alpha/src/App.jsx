@@ -17,7 +17,6 @@ export const App = () => {
       <Router>
         <Routes>
           <Route path="/friends" element={<Friends />} />
-
           <Route path="/login" element={<Login />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/" element={<Login />} />
