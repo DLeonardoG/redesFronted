@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { CreateModal } from "./createModal";
 import { NotificationButton } from '../Nofications/NotificationIcon';
+import { SearchInput } from './SearchInput';
+
 
 
 export const NavButton = ({ imagePath, altText, navigateTo, onClick, width = 24, height = 24 }) => {
@@ -74,6 +76,7 @@ export const AsideMain = ({ usuario }) => {
         width={28}
         height={28}
       />
+      <SearchInput padding='p-3'/>
 
       {isCreateModalOpen && (
         <CreateModal onClose={handleCloseModal} usuario={usuario} />
