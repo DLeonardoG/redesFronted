@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import {AsideMain } from './subComponents/asideMain';
 import '../styles.css';
 import { useUser } from '../UserContext';
+import { FeedPosts } from './subComponents/feedPosts'
+
 
 
 export const Home = () => {
@@ -10,8 +12,7 @@ export const Home = () => {
     return (
         <div className='text-3xl text-blue-100'>
             <AsideMain usuario={usuario} />
-            
-            <h1>Bienvenido {usuario.name}</h1>
+            <FeedPosts usuario={usuario} />
         </div>
     )
 }

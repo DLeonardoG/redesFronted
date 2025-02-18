@@ -5,21 +5,6 @@ import { FeedPostCard } from './feedPostCard';
 export const FeedPosts = ({ usuario }) => {
   const [followingPosts, setFollowingPosts] = useState([]);
 
-  const fetchImage = async (photo) => {
-    const imageUrl = `http://localhost:8083/api/publications/images/${photo}`;
-    const response = await fetch(imageUrl, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-      },
-    });
-    if (!response.ok) {
-      console.error(`Error cargando imagen: ${imageUrl}`);
-      return null;
-    }
-    const imageBlob = await response.blob();
-    return URL.createObjectURL(imageBlob);
-  };
-
   const fetchPostsByUser = async (userId) => {
     try {
       const response = await AxiosConfiguration.get(`publications/user/${userId}`, {
@@ -28,14 +13,7 @@ export const FeedPosts = ({ usuario }) => {
         },
       });
 
-      const postsWithImages = await Promise.all(
-        response.data.map(async (post) => ({
-          ...post,
-          photo: await fetchImage(post.photo),
-        }))
-      );
-
-      return postsWithImages;
+      return response.data;
     } catch (error) {
       console.error(`Error fetching posts for user ${userId}:`, error);
       return [];
