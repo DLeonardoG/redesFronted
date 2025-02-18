@@ -135,6 +135,7 @@ export const FeedPostCard = ({
             >
               <span className="material-icons-outlined">
                 Like
+                
               </span>
               <span>{optimisticLikes}</span>
             </button>
