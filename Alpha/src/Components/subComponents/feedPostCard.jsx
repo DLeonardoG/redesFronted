@@ -102,38 +102,46 @@ export const FeedPostCard = ({
 
   return (
     <>
-      <div className="bg-[#1e2939] p-6 rounded-lg w-full mb-4">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full mb-4">
         <div className="flex items-center gap-4">
-          <img src={profilePic} alt={username} className="w-12 h-12 rounded-full" />
-          <div className="text-white">
-            <p className="font-semibold">{username}</p>
-            <p className="text-sm">{formatDate(date)}</p>
+          <img
+            src={profilePic}
+            alt={username}
+            className="w-12 h-12 rounded-full object-cover"
+          />
+          <div className="text-gray-800">
+            <p className="font-semibold text-lg">{username}</p>
+            <p className="text-sm text-gray-500">{formatDate(date)}</p>
           </div>
         </div>
 
-        <p className="text-white mt-4">{description}</p>
+        <p className="text-gray-800 mt-4 text-base">{description}</p>
 
         <div className="mt-4">
-          <img src={imageUrl} alt={description} className="w-full h-auto rounded-lg" />
+          <img
+            src={imageUrl}
+            alt={description}
+            className="w-full h-auto rounded-lg object-cover shadow-md"
+          />
         </div>
 
         <div className="flex justify-between items-center mt-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <button
               onClick={handleLikeClick}
               className={`${
-                isLiked ? "text-blue-500" : "text-white"
-              } flex items-center gap-1`}
+                isLiked ? "text-red-500" : "text-gray-500"
+              } flex items-center gap-2 text-xl transition-colors duration-300`}
             >
               <span className="material-icons-outlined">
-                thumb_up
+                Like
               </span>
               <span>{optimisticLikes}</span>
             </button>
 
             <button
               onClick={handleCommentsClick}
-              className="text-white flex items-center gap-1"
+              className="text-gray-500 flex items-center gap-2 text-xl transition-colors duration-300 hover:text-blue-500"
             >
               <span className="material-icons-outlined">comment</span>
               <span>{comments.length}</span>

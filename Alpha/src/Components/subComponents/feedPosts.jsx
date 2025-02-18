@@ -48,7 +48,7 @@ export const FeedPosts = ({ usuario }) => {
   }, [usuario]);
 
   return (
-    <main className='feed_post-container'>
+    <main className='p-20 h-full'>
       {followingPosts.length > 0 ? (
         followingPosts.map((post) => (
           <FeedPostCard
@@ -62,6 +62,7 @@ export const FeedPosts = ({ usuario }) => {
             postId = {post.id}
             publisherId={post.publisherId}
             interations={post.interations}
+            profilePic={usuario.photo}
           />
         ))
       ) : (

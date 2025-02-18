@@ -11,7 +11,6 @@ const CommentsModal = ({ open, handleClose, postId, publisherId, onCommentAdded,
   const [editCommentText, setEditCommentText] = useState("");
 
   useEffect(() => {
-    // Normaliza los comentarios existentes
     setCommentsList(existingComments || []);
   }, [existingComments]);
 
@@ -24,7 +23,6 @@ const CommentsModal = ({ open, handleClose, postId, publisherId, onCommentAdded,
 
       setIsSubmitting(true);
 
-      // Crea un objeto para el comentario temporal
       const newComment = {
         tempId: Date.now(),
         comment: comment.trim(),
@@ -36,11 +34,9 @@ const CommentsModal = ({ open, handleClose, postId, publisherId, onCommentAdded,
         userGivingId: usuario.id,
       };
 
-      // Añadirlo de forma optimista a la lista de comentarios
       setCommentsList((prev) => [newComment, ...prev]);
-      onCommentAdded(newComment); // Notificar al componente principal
+      onCommentAdded(newComment);
 
-      // Enviar comentario al backend
       await AxiosConfiguration.post(
         "interations",
         {
@@ -57,10 +53,9 @@ const CommentsModal = ({ open, handleClose, postId, publisherId, onCommentAdded,
         }
       );
 
-      setComment(""); // Limpiar el campo de texto
+      setComment("");
     } catch (error) {
       console.error("Error al agregar comentario:", error);
-      // Restaurar la lista de comentarios si ocurre un error
       setCommentsList((prev) => prev.filter((c) => c.tempId !== newComment.tempId));
     } finally {
       setIsSubmitting(false);
@@ -74,30 +69,35 @@ const CommentsModal = ({ open, handleClose, postId, publisherId, onCommentAdded,
 
   const handleSaveEdit = async () => {
     if (!editCommentText.trim()) return;
-
+  
     try {
       const authToken = localStorage.getItem("authToken");
       if (!authToken) return;
-
-      // Enviar al backend para actualizar el comentario
-      await AxiosConfiguration.put(
-        `interations/${selectedCommentId}`,
+  
+      // Enviar la solicitud PATCH al backend para actualizar el comentario
+      const response = await AxiosConfiguration.patch(
+        `interations/${selectedCommentId}/comment`,
         { comment: editCommentText.trim() },
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
-
-      // Actualizar la lista de comentarios
-      setCommentsList((prev) =>
-        prev.map((c) =>
-          c.id === selectedCommentId ? { ...c, comment: editCommentText.trim() } : c
-        )
-      );
-      setSelectedCommentId(null); // Limpiar la edición
-      setEditCommentText("");
+  
+      if (response.status === 200) {
+        // Si la actualización fue exitosa, actualizar la lista de comentarios
+        setCommentsList((prev) =>
+          prev.map((c) =>
+            c.id === selectedCommentId ? { ...c, comment: editCommentText.trim() } : c
+          )
+        );
+        setSelectedCommentId(null);
+        setEditCommentText("");
+      } else {
+        console.error("Error al actualizar el comentario");
+      }
     } catch (error) {
       console.error("Error al editar comentario:", error);
     }
   };
+  
 
   const handleCancelEdit = () => {
     setSelectedCommentId(null);
@@ -109,12 +109,10 @@ const CommentsModal = ({ open, handleClose, postId, publisherId, onCommentAdded,
       const authToken = localStorage.getItem("authToken");
       if (!authToken) return;
 
-      // Eliminar comentario del backend
       await AxiosConfiguration.delete(`interations/${id}`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
-      // Eliminar comentario de la lista
       setCommentsList((prev) => prev.filter((c) => c.id !== id));
     } catch (error) {
       console.error("Error al eliminar comentario:", error);
@@ -123,90 +121,101 @@ const CommentsModal = ({ open, handleClose, postId, publisherId, onCommentAdded,
 
   return (
     <div
-      className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center ${open ? "block" : "hidden"}`}
+      className={`fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center ${open ? "block" : "hidden"}`}
       onClick={handleClose}
     >
       <div
-        className="bg-[#1e2939] p-6 rounded-lg w-96 overflow-y-auto"
+        className="bg-white rounded-lg w-full sm:w-[500px] max-h-[80vh] overflow-y-auto shadow-xl p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl text-white">Comentarios</h3>
-          <button onClick={handleClose} className="text-white">
-            X
+          <h3 className="text-xl font-semibold text-gray-900">Comentarios</h3>
+          <button onClick={handleClose} className="text-gray-600 hover:text-gray-800">
+            <span className="text-2xl">&times;</span>
           </button>
         </div>
 
-        <div className="border-b border-[#3a4a5c] mb-4"></div>
+        <div className="border-b mb-4 border-gray-200"></div>
 
         <div className="flex flex-col gap-4 mb-4">
           <textarea
             placeholder="Escribe un comentario..."
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            className="bg-[#334155] text-white p-3 rounded-md h-24"
+            className="p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
             onClick={handleCommentSubmit}
             disabled={isSubmitting || !comment.trim()}
-            className="bg-blue-500 text-white p-2 rounded-md flex items-center justify-center"
+            className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors flex items-center justify-center disabled:bg-gray-400"
           >
-            {isSubmitting && <div className="animate-spin w-5 h-5 border-4 border-t-4 border-white rounded-full"></div>}
-            Enviar
+            {isSubmitting ? (
+              <div className="animate-spin w-5 h-5 border-4 border-t-4 border-white rounded-full"></div>
+            ) : (
+              "Enviar"
+            )}
           </button>
         </div>
 
-        <div className="border-b border-[#3a4a5c] mb-4"></div>
+        <div className="border-b mb-4 border-gray-200"></div>
 
-        <div>
+        <div className="space-y-4">
           {commentsList.length === 0 ? (
-            <p className="text-[#b0b0b0] text-center">Aún no hay comentarios.</p>
+            <p className="text-center text-gray-500">Aún no hay comentarios.</p>
           ) : (
             commentsList.map((commentItem) => (
-              <div key={commentItem.id} className="mb-4">
+              <div key={commentItem.id} className="p-4 bg-gray-50 rounded-lg shadow-md">
                 <div className="flex justify-between items-center mb-2">
                   <div className="flex items-center gap-2">
                     <img
-                      src={commentItem.userGiving?.profilePic}
+                      src={commentItem.userGiving?.photo || "https://i.pinimg.com/550x/77/3e/4a/773e4a6b450dea859d9c0b9d45030ae6.jpg"}
                       alt={commentItem.username}
-                      className="w-6 h-6 rounded-full"
+                      className="w-8 h-8 rounded-full"
                     />
-                    <span className="text-white font-medium">{commentItem.username}</span>
+                    <span className="text-gray-800 font-medium">{commentItem.username}</span>
                   </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleEditComment(commentItem.id, commentItem.comment)}
-                      className="text-blue-500"
-                    >
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => handleDeleteComment(commentItem.id)}
-                      className="text-red-500"
-                    >
-                      Eliminar
-                    </button>
-                  </div>
+                  {usuario?.id === commentItem.userGivingId && (
+                    <div className="flex gap-3 text-sm text-gray-600">
+                      <button
+                        onClick={() => handleEditComment(commentItem.id, commentItem.comment)}
+                        className="hover:text-blue-600"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => handleDeleteComment(commentItem.id)}
+                        className="hover:text-red-600"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {selectedCommentId === commentItem.id ? (
-                  <div className="ml-4">
+                  <div className="mt-2">
                     <textarea
                       value={editCommentText}
                       onChange={(e) => setEditCommentText(e.target.value)}
-                      className="bg-[#334155] text-white p-2 rounded-md w-full"
+                      className="p-3 w-full rounded-lg border border-gray-300 bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    <div className="mt-2 flex gap-2">
-                      <button onClick={handleSaveEdit} className="bg-blue-500 text-white p-2 rounded-md">
+                    <div className="mt-2 flex gap-3">
+                      <button
+                        onClick={handleSaveEdit}
+                        className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+                      >
                         Guardar
                       </button>
-                      <button onClick={handleCancelEdit} className="border border-[#b0b0b0] text-[#b0b0b0] p-2 rounded-md">
+                      <button
+                        onClick={handleCancelEdit}
+                        className="border border-gray-300 text-gray-600 p-2 rounded-md hover:bg-gray-200"
+                      >
                         Cancelar
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <p className="text-white ml-4">{commentItem.comment}</p>
+                  <p className="text-gray-800 mt-2">{commentItem.comment}</p>
                 )}
               </div>
             ))
