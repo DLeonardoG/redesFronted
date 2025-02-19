@@ -62,44 +62,71 @@ export const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-700 to-black bg-[length:200%_200%]"></div>
-            <div className="backdrop-blur-lg bg-white/10 p-8 rounded-2xl shadow-lg max-w-sm w-full text-white relative z-10">
-                <h1 className="text-2xl font-bold text-center">Login</h1>
-                <form className="flex flex-col space-y-4 gap-4 pt-6" onSubmit={handleSubmit}>
-                    <input
-                        onChange={handleChange}
-                        name="email"
-                        type="text"
-                        placeholder="email"
-                        className="px-4 py-2 rounded-lg bg-white/20 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-white/50"
-                        required
-                    />
-                    <input
-                        onChange={handleChange}
-                        name="password"
-                        type="password"
-                        placeholder="password"
-                        className="px-4 py-2 rounded-lg bg-white/20 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-white/50"
-                        required
-                    />
-                    <button
-                        type="submit"
-                        className="bg-white-mt-8/30 hover:bg-white/40 transition p-2 rounded-lg font-semibold"
-                    >
-                        Login
-                    </button>
+        <div className="min-h-screen flex items-center justify-center bg-cover bg-center relative" 
+             style={{
+                 backgroundImage: "url('https://cloudfront-eu-central-1.images.arcpublishing.com/prisa/56MB6LL63JBP3H6A6EAHV23T2Q.jpg')",
+             }}>
+        
+            <div className="absolute inset-0 bg-black/50"></div>
+            
+           
+            <div className="w-full max-w-md p-8 space-y-8 relative z-10">
+               
+                <div className="text-center">
+                    <h2 className="mt-6 text-4xl font-bold text-white">Welcome Back</h2>
+                    <p className="mt-2 text-sm text-gray-300">Sign in to your account</p>
+                </div>
+                
+            
+                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                    <div className="space-y-4">
+                        <div>
+                            <label htmlFor="email" className="sr-only">Email</label>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                required
+                                className="w-full px-4 py-3 border bg-gray-900/50 border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-white"
+                                placeholder="Email address"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="password" className="sr-only">Password</label>
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                required
+                                className="w-full px-4 py-3 border bg-gray-900/50 border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-white"
+                                placeholder="Password"
+                                onChange={handleChange}
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <button
+                            type="submit"
+                            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200"
+                        >
+                            Sign in
+                        </button>
+                    </div>
                 </form>
-                <p className="text-center mt-6">
-                    Don't have an account?{' '}
-                    <a
-                        href=""
-                        onClick={() => navigate('../signin')}
-                        className="text-white font-semibold underline"
-                    >
-                        Sign up. It's free
-                    </a>
-                </p>
+                
+                <div className="text-center">
+                    <p className="text-sm text-gray-300">
+                        Don't have an account?{' '}
+                        <button
+                            onClick={() => navigate('../signin')}
+                            className="font-medium text-blue-400 hover:text-blue-300 transition duration-200"
+                        >
+                            Sign up for free
+                        </button>
+                    </p>
+                </div>
             </div>
         </div>
     );

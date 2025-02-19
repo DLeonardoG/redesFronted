@@ -20,16 +20,15 @@ export const ProfilePhotoUpdate = () => {
   };
 
   const handleSubmit = () => {
-    // Verificar que la URL no esté vacía
-    if (newPhotoURL) {
-      AxiosConfiguration.patch(`/users/${usuario.id}/photo`, { photo: newPhotoURL }, {
+    if (newPhotoURL?.trim()) { // Verifica que no esté vacío
+      AxiosConfiguration.patch(`/users/${usuario.id}/photo`, newPhotoURL, { // Se envía solo el string
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain", // Asegura que el backend lo reciba como texto
           "Authorization": `Bearer ${localStorage.getItem("authToken")}`
         }
       })
         .then((response) => {
-          const updatedPhoto = response.data.photo;
+          const updatedPhoto = response.data;
           actualizarUsuario({ ...usuario, photo: updatedPhoto });
         })
         .catch((error) => {
@@ -37,6 +36,7 @@ export const ProfilePhotoUpdate = () => {
         });
     }
   };
+  
 
   return (
     <div>

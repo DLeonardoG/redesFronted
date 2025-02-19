@@ -39,7 +39,7 @@ export const FriendsCard = ({ usuario }) => {
     try {
       if (isFollowing) {
         await AxiosConfiguration.delete(
-          `/follows/unfollow?followerId=${loggedUser.id}&followingId=${usuario.id}`,
+          `/follows/unfollow?followerId=${usuario.id}&followingId=${loggedUser.id}`,
           { headers: { Authorization: `Bearer ${authToken}` } }
         );
         setIsFollowing(false);
@@ -52,8 +52,8 @@ export const FriendsCard = ({ usuario }) => {
         await AxiosConfiguration.post(
           "/follows",
           {
-            usernameFollowedId: usuario.id,
-            usernameFollowingId: loggedUser.id,
+            usernameFollowedId: loggedUser.id,
+            usernameFollowingId: usuario.id,
             date: new Date().toISOString(),
           },
           { headers: { Authorization: `Bearer ${authToken}` } }

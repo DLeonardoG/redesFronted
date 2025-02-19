@@ -66,43 +66,120 @@ export const SignIn = () => {
     };
 
     return (
-        <div className='bg-gradient-to-r from-black via-gray-900 to-black bg-[length:200%_200%] h-screen flex justify-center items-center'>
-            <aside className='hidden md:flex bg-gradient-to-b from-gray-900 via-gray-800 to-gray-600 animate-gradient w-1/2 justify-center items-center h-screen border border-black/10'>
-                <h1 className='text-white text-4xl'>Ledrian</h1>
+        <div className='min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900 via-slate-900 to-black'>
+            
+            <aside className='hidden md:flex w-1/1 fixed left-0 h-screen justify-center items-center bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] 
+                        from-indigo-900 via-slate-900 to-black border-r border-purple-500/20'
+                        style={{
+                            backgroundImage: "url('../Alpha/src/assets/61691.png')",
+                        }}
+                        >
+                <div className='text-center space-y-4'>
+                </div>
+             
             </aside>
-            <main className='w-screen md:w-1/2 flex justify-around items-center h-screen flex-col bg-white'>
-                <h2 className="text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-600 mb-6">
-                    Sign in
-                </h2>
 
-                <form className='sign_form w-full flex flex-col items-center gap-5' onSubmit={handleSubmit}>
-                    <div className='flex gap-5 w-4/5'>
-                        <div className='w-1/2'>
-                            <input name='name' type="text" placeholder="Name" className="border border-gray-300 p-2 rounded-lg w-full" value={formData.name} onChange={handleChange} required />
-                        </div>
-                        <div className='w-1/2'>
-                            <input name='lastname' type="text" placeholder="Lastname" className="border border-gray-300 p-2 rounded-lg w-full" value={formData.lastname} onChange={handleChange} required />
-                        </div>
-                    </div>
-                    <div className='w-4/5'>
-                        <input name='email' type="email" placeholder="Email" className="border border-gray-300 p-2 rounded-lg w-full" value={formData.email} onChange={handleChange} required />
-                        {errors.email && <p className='text-red-500 text-sm'>{errors.email}</p>}
-                    </div>
-                    <div className='w-4/5'>
-                        <input name='username' type="text" placeholder="Username" className="border border-gray-300 p-2 rounded-lg w-full" value={formData.username} onChange={handleChange} required />
-                        {errors.username && <p className='text-red-500 text-sm'>{errors.username}</p>}
-                    </div>
-                    <div className='w-4/5'>
-                        <input name='password' type="password" placeholder="Password" className="border border-gray-300 p-2 rounded-lg w-full" value={formData.password} onChange={handleChange} required />
-                    </div>
-                    <div className='w-4/5'>
-                        <input name='repeatPassword' type="password" placeholder="Repeat Password" className="border border-gray-300 p-2 rounded-lg w-full" value={formData.repeatPassword} onChange={handleChange} required />
-                        {errors.password && <p className='text-red-500 text-sm'>{errors.password}</p>}
-                    </div>
-                    <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-lg w-4/5">Register</button>
-                </form>
+            <main className='w-full md:ml-[0%] min-h-screen flex flex-col justify-center items-center px-4 py-8 bg-black/40 backdrop-blur-sm'>
+                <div className='w-full max-w-md space-y-8'>
+                    <h2 className="text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 animate-gradient bg-[length:200%_auto]">
+                        Join the Galaxy
+                    </h2>
 
-                <p className="mt-4">Do you already have an account? <a href="#" className="text-blue-500 hover:underline" onClick={() => navigate("/login")}>Go login</a></p>
+                    <form className='space-y-6' onSubmit={handleSubmit}>
+                        <div className='flex gap-4'>
+                            <div className='flex-1'>
+                                <input 
+                                    name='name' 
+                                    type="text" 
+                                    placeholder="Name" 
+                                    className="w-full px-4 py-3 bg-slate-900/50 border border-purple-500/30 rounded-lg focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 text-white placeholder-purple-300/50 transition-all"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required 
+                                />
+                            </div>
+                            <div className='flex-1'>
+                                <input 
+                                    name='lastname' 
+                                    type="text" 
+                                    placeholder="Lastname" 
+                                    className="w-full px-4 py-3 bg-slate-900/50 border border-purple-500/30 rounded-lg focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 text-white placeholder-purple-300/50 transition-all"
+                                    value={formData.lastname}
+                                    onChange={handleChange}
+                                    required 
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <input 
+                                name='email' 
+                                type="email" 
+                                placeholder="Email" 
+                                className="w-full px-4 py-3 bg-slate-900/50 border border-purple-500/30 rounded-lg focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 text-white placeholder-purple-300/50 transition-all"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required 
+                            />
+                            {errors.email && <p className='text-red-400 text-sm mt-1'>{errors.email}</p>}
+                        </div>
+
+                        <div>
+                            <input 
+                                name='username' 
+                                type="text" 
+                                placeholder="Username" 
+                                className="w-full px-4 py-3 bg-slate-900/50 border border-purple-500/30 rounded-lg focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 text-white placeholder-purple-300/50 transition-all"
+                                value={formData.username}
+                                onChange={handleChange}
+                                required 
+                            />
+                            {errors.username && <p className='text-red-400 text-sm mt-1'>{errors.username}</p>}
+                        </div>
+
+                        <div>
+                            <input 
+                                name='password' 
+                                type="password" 
+                                placeholder="Password" 
+                                className="w-full px-4 py-3 bg-slate-900/50 border border-purple-500/30 rounded-lg focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 text-white placeholder-purple-300/50 transition-all"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required 
+                            />
+                        </div>
+
+                        <div>
+                            <input 
+                                name='repeatPassword' 
+                                type="password" 
+                                placeholder="Repeat Password" 
+                                className="w-full px-4 py-3 bg-slate-900/50 border border-purple-500/30 rounded-lg focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 text-white placeholder-purple-300/50 transition-all"
+                                value={formData.repeatPassword}
+                                onChange={handleChange}
+                                required 
+                            />
+                            {errors.password && <p className='text-red-400 text-sm mt-1'>{errors.password}</p>}
+                        </div>
+
+                        <button 
+                            type="submit" 
+                            className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/25"
+                        >
+                            Launch into Space
+                        </button>
+                    </form>
+
+                    <p className="text-center text-purple-300/80">
+                        Already have a spaceship?{' '}
+                        <button 
+                            onClick={() => navigate("/login")}
+                            className="text-purple-400 hover:text-purple-300 font-semibold hover:underline transition-colors"
+                        >
+                            Dock here
+                        </button>
+                    </p>
+                </div>
             </main>
         </div>
     );
